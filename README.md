@@ -1,24 +1,12 @@
-# quizzito
+# Quizzito Frontend Challenge
+Make a clone of this [quiz](https://quizzito.com/main/quizzito/tryquiz/start/tha3lab) using either Vue, Svelte or Angular.
 
-## Project setup
-```
-npm install
-```
+You can make use of this [quiz](https://quizzito.com/main/assets/try_quiz/quizzes/tha3lab.json) in JSON format (it is in arabic), and these assets :
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+![Empty Emoji](assets/emptyemoji.png)
+![Happy Emoji](assets/happyemoji.png)
+![Sad Emoji](assets/sademoji.png)
 
-### Compiles and minifies for production
-```
-npm run build
-```
+You will have to split the project into subtasks and document them.
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+**Deliverable**: Git repo link, tasks documentation
