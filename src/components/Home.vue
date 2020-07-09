@@ -8,15 +8,18 @@
             <div class="container">
                <div class="row text-center justify-content-center">
                <div id="game" class="col-md-6 col-sm-10 col-10 order-md-2">
-               <div id="appreciationIndicator" class="d-flex flex-row w-100">
-                  <img v-for="n in 5" :key="n" width="50" src="@/assets/emptyemoji.png" alt="score emoji">
+               <div v-if="end === false" id="appreciationIndicator" class="d-flex flex-row w-100">
+                  <img 
+                  v-for="n in 5" :key="n" width="50" alt="score emoji"
+                  src="@/assets/emptyemoji.png" 
+                  >
                </div>
-               <div id="progressIndicator">
+               <div v-if="end === false" id="progressIndicator">
                   <div id="progressArrow"
                      :style="'left: ' + questions[current].progressArrow"
                   ></div>
                </div>
-               <div id="hud" class="d-none">
+               <div id="hud"  class="d-none">
                   <div id="hud-item">
                      <p id="progressText" class="hud-prefix">Question</p>
                      <div id="progressBar">
@@ -29,37 +32,55 @@
                   </div>
                </div>
                <!-- Questions Start -->
-               <h4 id="question" class="pb-2 pt-3" style="direction:rtl;">What is the answer to this questions?</h4>
-               <div id="questions">
+               <h4 v-if="end === false" id="question" class="pb-2 pt-3" style="direction:rtl;">What is the answer to this questions?</h4>
+               <div v-if="end === false" id="questions">
                   <h5>{{questions[current].question}}</h5>
-                  <div 
-                     @click="activeLink = '1'"
-                     :class="activeLink === '1' ? 'active' : ''"
+                  <div
+                     class="choice-container"
+                     @click="selected = 1, linkColor = 'wrong'"
+                     :class="{active:selected == 1, wrong: appreciation === 'wrong', correct: appreciation === 'correct'}"
                   >
                      <p class="choice-text" @click="choice= '1'">
                         {{questions[current].choice1}}
                      </p>
                   </div>
                   <div class="choice-container"
-                     @click="activeLink = 2"
-                     :class="activeLink === '2' ? 'active' : ''"
+                     @click="selected = 2, linkColor = 'wrong'"
+                     :class="{active:selected == 2, wrong: appreciation === 'wrong', correct: appreciation === 'correct'}"
                      
                   >
                      <p class="choice-text"  @click="choice= '2'">
                         {{questions[current].choice2}}
                      </p>
                   </div>
-                  <div class="choice-container"
-                     @click="activeLink = 3"
-                     :class="activeLink === '3' ? 'active' : ''"
+                  <div 
+                     class="choice-container"
+                     @click="selected = 3, linkColor = 'correct', correctAnswers+=10"
+                     :class="{active:selected == 3, wrong: appreciation === 'wrong', correct: appreciation === 'correct'}"  
                   >
                      <p class="choice-text" @click="choice= '3'">
                         {{questions[current].choice3}}
                      </p>
                   </div>
                </div>
+               <table v-if="end === true" class="table">           
+                  <thead>
+                     <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">الاسم</th>
+                        <th scope="col">النتيجة</th>
+                     </tr>
+                  </thead>
+               <tbody>
+                  <tr>
+                     <th scope="row">1</th>
+                     <td>-</td>
+                     <td>{{correctAnswers}}</td>
+                  </tr>
+               </tbody>
+               </table>
                <!-- Questions end -->
-               <div class="my-4">
+               <div v-if="end === false" class="my-4">
                   <a href="#" class="btn btn-success btn-lg" id="confirm-btn"
                      @click="goNext"
                   >موافق</a>
@@ -85,9 +106,11 @@
 </template>
 
 <script>
+// import EventBus from "../eventBus.js";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import questions from "../assets/questions-data.js";
+
 export default {
 
    name:"home",
@@ -98,18 +121,62 @@ export default {
    data: function() {
       return {
          current: 0,
+         end: false,
          choice: null,
-         appreciation: null,
+         appreciation: '',
          answer: '3',
          questions: questions,
-         activeLink: null
+         selected: undefined,
+         linkColor: 'default',
+         icon: 'emptyemoji.png',
+         correctAnswers: 0,
+         wrongAnswers: 0,
       }
    },
    methods: {
       goNext: function() {
-         this.current += 1
-      }
-   }
+         if (this.current < 4) {
+            this.current += 1;
+            this.selected = undefined; // Reset selected answer
+         } else {
+            this.end = true; // Quizz ended
+         }
+      },
+      checkAnswer: function() {
+         if(this.choice === this.answer) {
+            this.appreciation = 'correct';
+            this.linkColor = 'correct';
+            this.icon = 'happyemoji.png';
+         } else {
+            this.appreciation = 'wrong';
+            this.linkColor = 'wrong';
+            this.icon = 'sademoji.png'
+         }
+      },
+      // changeIcon: function(event, currentQuestion) {
+      //    if (this.current === currentQuestion && this.choice == this.answer) {
+      //       this.appreciation = '@/assets/happyemoji.png';
+      //       EventBus.$emit("default");
+      //    } else if (this.current === currentQuestion && this.choice != this.answer) {
+      //       this.appreciation = '@/assets/sademoji.png';
+      //       EventBus.$emit("correct");
+      //    } else {
+      //       this.appreciation = '@/assets/emptyemoji.png';
+      //       EventBus.$emit("wrong");
+      //    }
+      // }
+   },
+   // watch: {
+   //    gameStatus() {
+   //       if (this.current === currentQuestion && this.choice == this.answer) {
+   //          this.appreciation = '@/assets/happyemoji.png';
+   //       } else if (this.current === currentQuestion && this.choice != this.answer) {
+   //          this.appreciation = '@/assets/sademoji.png';
+   //       } else {
+   //          this.appreciation = '@/assets/emptyemoji.png';
+   //       }
+   //    }
+   // }
 }
 </script>
 
@@ -150,6 +217,10 @@ export default {
     background: #fff !important;
     border-radius: 1rem;
 }
+.default {
+   background: #fff !important;
+   border-radius: 1rem;
+}
 .correct {
    background: #080 !important;
 }
@@ -162,7 +233,7 @@ export default {
     transition: transform 150ms;
     background: rgba(0,0,0,.15) !important;
 }
-.choice-container.active {
+.active {
    color: #fff !important;
    background: orange !important;
 }

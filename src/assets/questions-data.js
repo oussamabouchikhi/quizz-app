@@ -5,7 +5,8 @@ const questions = [
       "choice2": "لسانه",
       "choice3": "يده",
       "answer": "3",
-      "progressArrow": "486px"
+      "progressArrow": "486px",
+      "icon": "@/assets/emptyemoji.png"
     },
     {
       "question": "لماذا كان الثعلب يتجول في الغابة ؟",
@@ -13,7 +14,8 @@ const questions = [
       "choice3": "يبحث عن فريسة",
       "choice1": "يبحث عن إبنه",
       "answer": "3",
-      "progressArrow": "378px"
+      "progressArrow": "378px",
+      "icon": "@/assets/emptyemoji.png"
     },
     {
       "question": "كيف كان الحيوان الغريب الذي رآه الثعلب ؟",
@@ -21,7 +23,8 @@ const questions = [
       "choice3": "كبيرا و مخيفا",
       "choice1": "كبيرا و طيبا",
       "answer": "3",
-      "progressArrow": "270px"
+      "progressArrow": "270px",
+      "icon": "@/assets/emptyemoji.png"
     },
     {
       "question": "...كان لهذا الحيوان شعر طويل على",
@@ -29,7 +32,8 @@ const questions = [
       "choice2": "رجليه و رأسه",
       "choice1": "جسمه كله",
       "answer": "3",
-      "progressArrow": "162px"
+      "progressArrow": "162px",
+      "icon": "@/assets/emptyemoji.png"
     },
     {
       "question": "بماذا شعر الثعلب منذ الوهلة الأولى التي رأى فيها الأسد ؟",
@@ -37,7 +41,8 @@ const questions = [
       "choice2": "بالحزن الشديد",
       "choice3": "بالخوف الشديد",
       "answer": "3",
-      "progressArrow": "54px"
+      "progressArrow": "54px",
+      "icon": "@/assets/emptyemoji.png"
     }
 ];
 
