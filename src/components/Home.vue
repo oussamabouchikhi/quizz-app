@@ -32,13 +32,14 @@
                   </div>
                </div>
                <!-- Questions Start -->
-               <h4 v-if="end === false" id="question" class="pb-2 pt-3" style="direction:rtl;">What is the answer to this questions?</h4>
+               <h4 v-if="end === false" id="question" class="pb-2 pt-3" style="direction:rtl;">
+                  {{questions[current].question}}
+               </h4>
                <div v-if="end === false" id="questions">
-                  <h5>{{questions[current].question}}</h5>
                   <div
                      class="choice-container"
                      @click="selected = 1, linkColor = 'wrong'"
-                     :class="{active:selected == 1, wrong: appreciation === 'wrong', correct: appreciation === 'correct'}"
+                     :class="[{active:selected == 1, linkColor: active}]"
                   >
                      <p class="choice-text" @click="choice= '1'">
                         {{questions[current].choice1}}
@@ -46,7 +47,7 @@
                   </div>
                   <div class="choice-container"
                      @click="selected = 2, linkColor = 'wrong'"
-                     :class="{active:selected == 2, wrong: appreciation === 'wrong', correct: appreciation === 'correct'}"
+                     :class="[{active:selected == 2, linkColor: active}]"
                      
                   >
                      <p class="choice-text"  @click="choice= '2'">
@@ -56,29 +57,13 @@
                   <div 
                      class="choice-container"
                      @click="selected = 3, linkColor = 'correct', correctAnswers+=10"
-                     :class="{active:selected == 3, wrong: appreciation === 'wrong', correct: appreciation === 'correct'}"  
+                     :class="[{active:selected == 3, linkColor: active}]"
                   >
                      <p class="choice-text" @click="choice= '3'">
                         {{questions[current].choice3}}
                      </p>
                   </div>
                </div>
-               <table v-if="end === true" class="table">           
-                  <thead>
-                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">الاسم</th>
-                        <th scope="col">النتيجة</th>
-                     </tr>
-                  </thead>
-               <tbody>
-                  <tr>
-                     <th scope="row">1</th>
-                     <td>-</td>
-                     <td>{{correctAnswers}}</td>
-                  </tr>
-               </tbody>
-               </table>
                <!-- Questions end -->
                <div v-if="end === false" class="my-4">
                   <a href="#" class="btn btn-success btn-lg" id="confirm-btn"
@@ -86,7 +71,40 @@
                   >موافق</a>
                </div>
                </div>
-               <div id="book" class="card align-center px-1 pb-2 mx-4 rounded col-md-4 col-sm-10 col-10 order-md-1">
+               <!-- Score Result Start -->
+               <table v-if="showResult === true" class="table">           
+                  <thead>
+                     <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">الاسم</th>
+                        <th scope="col">النتيجة</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                     <th scope="row">1</th>
+                     <td>{{username}}</td>
+                     <td>{{correctAnswers}}</td>
+                  </tr>
+               </tbody>
+               </table>
+               <div v-if="end === true" id="end" class="col-sm-12">
+               <span class="text-muted">النتيجة النهائية</span>
+               <h1 id="finalScore">{{correctAnswers}}</h1>
+        
+               <form class="d-flex justify-content-center mb-5">
+                  <input type="text" name="username" class="form-control" style="width:auto;" id="username" placeholder="اكتب اسمك هنا" v-model="username">
+               
+
+                  <button class="btn btn-primary btn-xl mx-2 my-lg-0" id="saveScoreBtn"  @click="showResult = true">
+                     حفظ</button>
+               </form>
+               <hr>
+               <a href="https://quizzito.com/main/quizzito/tryquiz" class="btn btn-xl btn-outline-primary" >جرب كويزاً آخر</a>
+               <a href="https://quizzito.com/main/quizzito/join" class="btn btn-xl btn-primary" target="_blank">التسجيل</a>
+            </div>
+               <!-- Score Result End -->
+               <div id="book" v-if="end === false" class="card align-center px-1 pb-2 mx-4 rounded col-md-4 col-sm-10 col-10 order-md-1">
                   <div class="card-body">
                      <span class="text-muted mt-1">أنت تلعب الآن ...</span>
                      <h4 class="pb-2">الثعلب والأسد</h4>
@@ -130,7 +148,8 @@ export default {
          linkColor: 'default',
          icon: 'emptyemoji.png',
          correctAnswers: 0,
-         wrongAnswers: 0,
+         username: '',
+         showResult: false
       }
    },
    methods: {
@@ -165,18 +184,7 @@ export default {
       //       EventBus.$emit("wrong");
       //    }
       // }
-   },
-   // watch: {
-   //    gameStatus() {
-   //       if (this.current === currentQuestion && this.choice == this.answer) {
-   //          this.appreciation = '@/assets/happyemoji.png';
-   //       } else if (this.current === currentQuestion && this.choice != this.answer) {
-   //          this.appreciation = '@/assets/sademoji.png';
-   //       } else {
-   //          this.appreciation = '@/assets/emptyemoji.png';
-   //       }
-   //    }
-   // }
+   }
 }
 </script>
 
@@ -218,7 +226,7 @@ export default {
     border-radius: 1rem;
 }
 .default {
-   background: #fff !important;
+   background: #fff ;
    border-radius: 1rem;
 }
 .correct {
@@ -231,11 +239,11 @@ export default {
    cursor: pointer;
     transform: translateY(-0.1rem);
     transition: transform 150ms;
-    background: rgba(0,0,0,.15) !important;
+    background: rgba(0,0,0,.15) ;
 }
 .active {
-   color: #fff !important;
-   background: orange !important;
+   color: #fff;
+   background: orange ;
 }
 .choice-text {
    padding: .75em;
