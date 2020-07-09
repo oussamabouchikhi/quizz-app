@@ -89,12 +89,11 @@
                </tbody>
                </table>
                <div v-if="end === true" id="end" class="col-sm-12">
-               <span class="text-muted">النتيجة النهائية</span>
-               <h1 id="finalScore">{{correctAnswers}}</h1>
+               <span v-if="end === true && showResult === false" class="text-muted">النتيجة النهائية</span>
+               <h1 v-if="end === true && showResult === false" id="finalScore">{{correctAnswers}}</h1>
         
-               <form class="d-flex justify-content-center mb-5">
-                  <input type="text" name="username" class="form-control" style="width:auto;" id="username" placeholder="اكتب اسمك هنا" v-model="username">
-               
+               <form v-if="end === true && showResult === false" class="d-flex justify-content-center mb-5">
+                  <input type="text" name="username" class="form-control" style="width:auto;" id="username" placeholder="اكتب اسمك هنا" v-model="username">     
 
                   <button class="btn btn-primary btn-xl mx-2 my-lg-0" id="saveScoreBtn"  @click="showResult = true">
                      حفظ</button>
@@ -243,7 +242,7 @@ export default {
 }
 .active {
    color: #fff;
-   background: orange ;
+   background: orange !important;
 }
 .choice-text {
    padding: .75em;
