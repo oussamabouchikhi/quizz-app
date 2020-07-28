@@ -1,4 +1,4 @@
-# Quizzito Frontend Challenge
+# Quizz App Challenge
 Make a clone of this [quiz](https://quizzito.com/main/quizzito/tryquiz/start/tha3lab) using either Vue, Svelte or Angular.
 
 You can make use of this [quiz](https://quizzito.com/main/assets/try_quiz/quizzes/tha3lab.json) in JSON format (it is in arabic), and these assets :
