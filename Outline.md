@@ -1,4 +1,4 @@
-# Quizzito Challenge
+# Quizz App Challenge
 
 ## 1- Create Vue/cli project
 ## 2- Design The Page
@@ -9,16 +9,16 @@
 ### Main content
 1. Quizz
 * [x] Design Quizz
-* [] Create Quizz Component
-* [] Extract Quizz Component into Separate Components
+* [ ] Create Quizz Component
+* [ ] Extract Quizz Component into Separate Components
     - QuestionBox
     - Question
     - Button
      
 2. Book
 * [x] Design Book 
-* [] Create Book Component
-* [] Extract Book Component into Separate Components
+* [ ] Create Book Component
+* [ ] Extract Book Component into Separate Components
     - BookBox
     - BookImage
 
@@ -29,7 +29,7 @@
         
 ## 3. Make Quizz Working
 * [x] Fetch Questions data from api
-* [] Change question container Color depending on user answer
+* [ ] Change question container Color depending on user answer
     - Green if answer is correct
     - Red if answer is wrong
 * [x] Change question container Color when active
